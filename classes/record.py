@@ -1,3 +1,4 @@
+from exceptions.phone import PhoneException
 from .name import Name
 from .phone import Phone
 
@@ -30,19 +31,19 @@ class Record:
         """
         :param phone:
         """
-        k = self.__phone_index(phone)
-        if k is not None:
-            del self.phones[k]
+        try:
+            self.phones.remove(self.find_phone(phone))
+        except ValueError:
+            raise PhoneException(f"Phone {phone} not found")
 
     def find_phone(self, phone):
         """
         :param phone:
         :return:
         """
-        try:
-            return [p.value for p in self.phones if p.value == phone][0]
-        except IndexError:
-            return None
+        for p in self.phones:
+            if p.value == phone:
+                return p
 
     def __phone_index(self, phone) -> int | None:
         for k, p in enumerate(self.phones):
