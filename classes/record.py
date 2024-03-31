@@ -22,7 +22,7 @@ class Record:
         :param phone:
         :param new_phone:
         """
-        k = self._phone_index(phone)
+        k = self.__phone_index(phone)
         if k is not None:
             self.phones[k] = Phone(new_phone)
 
@@ -30,7 +30,7 @@ class Record:
         """
         :param phone:
         """
-        k = self._phone_index(phone)
+        k = self.__phone_index(phone)
         if k is not None:
             del self.phones[k]
 
@@ -44,7 +44,7 @@ class Record:
         except IndexError:
             return None
 
-    def _phone_index(self, phone) -> int | None:
+    def __phone_index(self, phone) -> int | None:
         for k, p in enumerate(self.phones):
             if p.value == phone:
                 return k
